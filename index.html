@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="form" method="post">
+    <input type="text" id="mensaje">
+    <input type="button" id="btn" value="Enviar mensaje" onclick="send();">
+    </form>
+    <div id="info-res"></div>
+
+    <script>
+        const send = () => {
+            document.getElementById("btn").onclick = () => {
+                let x = document.getElementById("mensaje").value
+                let div = document.getElementById("info-res")
+                let requestOptions = {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        mensaje: x,
+                        fecha: new Date()
+                    }),
+                };
+                fetch('http://localhost:80/info3', requestOptions)
+
+                    .then(async (res) => {
+                        data=await res.json()
+                        div.append(JSON.stringify(data))
+                        div.appendChild(document.createElement("br"))
+                        console.log()
+                    })
+            }
+        }
+    </script>
+</body>
+
+</html>
